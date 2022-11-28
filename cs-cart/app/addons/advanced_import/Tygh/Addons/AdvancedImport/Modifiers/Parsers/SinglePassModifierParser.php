@@ -11,13 +11,10 @@
  * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
-
 namespace Tygh\Addons\AdvancedImport\Modifiers\Parsers;
-
 use Tygh\Enum\Addons\AdvancedImport\ModifierParsingState;
 use Tygh\Addons\AdvancedImport\Exceptions\InvalidModifierFormatException;
 use Tygh\Addons\AdvancedImport\Exceptions\InvalidModifierParameterException;
-
 /**
  * The class responsible parsing modifier using single pass approach. Embedded operations are not allowed.
  *
@@ -28,31 +25,22 @@ class SinglePassModifierParser implements IModifierParser
     const PARAMETER_LIST_OPENER = '(';
     const PARAMETER_LIST_CLOSER = ')';
     const PARAMETER_DELIMITER = ',';
-
     /** @var int Current parsing state */
     protected $parsingState;
-
     /** @var array Character list that invalid for operator to begin with */
     protected $invalidOperatorChars = array('(');
-
     /** @var array Character list that a parameter can be wrapped in */
     protected $parameterWrapperVariants = array("'", '"');
-
     /** @var array Array that contains function name characters as its items */
     protected $function = array();
-
     /** @var array Array that contains parameter characters as its items */
     protected $parameter = array();
-
     /** @var array Array of parsed parameters */
     protected $parameters = array();
-
     /** @var null|string the function's parameter wrapper that is expecting to be at the end of parameter */
     protected $expectedParameterCloserWrapper = null;
-
     /** @var null|string wrapper parameter that is expecting to be at the end of the value parameter */
     protected $expectedInnerParameterCloserWrapper = null;
-    
     /**
      * @inheritdoc
      */
@@ -61,42 +49,42 @@ class SinglePassModifierParser implements IModifierParser
         $this->resetParser();
         $modifier = trim($modifier);
         $safe_threshold = 50000;
-
         $chars = str_split($modifier);
-
-        while (count($chars) > 0 && $safe_threshold > 0) {
+        while (count($chars) > 0 && $safe_threshold > 0)
+        {
             $safe_threshold--;
             $char = array_shift($chars);
-
-            if ($this->parsingState === ModifierParsingState::STARTING_PARSING_MODIFIER) {
+            if ($this->parsingState === ModifierParsingState::STARTING_PARSING_MODIFIER)
+            {
                 $this->startParsingModifier($char);
-
-            } elseif ($this->parsingState === ModifierParsingState::EXPECTING_OPENING_BRACKET) {
+            }
+            elseif ($this->parsingState === ModifierParsingState::EXPECTING_OPENING_BRACKET)
+            {
                 $this->parseFunctionName($char);
-
-            } elseif ($this->parsingState === ModifierParsingState::STARTING_PARSING_PARAMETER) {
+            }
+            elseif ($this->parsingState === ModifierParsingState::STARTING_PARSING_PARAMETER)
+            {
                 $this->startParsingParameter($char);
-
-            } elseif ($this->parsingState === ModifierParsingState::EXPECTING_PARAMETER_WRAPPER) {
+            }
+            elseif ($this->parsingState === ModifierParsingState::EXPECTING_PARAMETER_WRAPPER)
+            {
                 $this->parseParameterWithWrapper($char);
-
-            } elseif ($this->parsingState === ModifierParsingState::EXPECTING_PARAMETER_DELIMITER) {
+            }
+            elseif ($this->parsingState === ModifierParsingState::EXPECTING_PARAMETER_DELIMITER)
+            {
                 $this->parseParameter($char);
-
-            } elseif ($this->parsingState === ModifierParsingState::PARAMETER_PARSING_FINISHED) {
+            }
+            elseif ($this->parsingState === ModifierParsingState::PARAMETER_PARSING_FINISHED)
+            {
                 $this->parseAfterParameterParseFinished($char);
-
-            } elseif ($this->parsingState === ModifierParsingState::PARSING_FINISHED) {
+            }
+            elseif ($this->parsingState === ModifierParsingState::PARSING_FINISHED)
+            {
                 break;
             }
         }
-
         $this->checkParserStateAfterParse($modifier);
-
-        return array(
-            'function' => trim(implode('', $this->function)),
-            'parameters' => $this->parameters,
-        );
+        return array('function' => trim(implode('', $this->function)), 'parameters' => $this->parameters,);
     }
 
     /**
@@ -109,22 +97,17 @@ class SinglePassModifierParser implements IModifierParser
     protected function startParsingModifier($char)
     {
         // Skip any whitespace character
-        if (!$this->isWhitespaceChar($char)) {
-
+        if (!$this->isWhitespaceChar($char))
+        {
             // The function name cannot start with opening bracket character
-            if ($char === self::PARAMETER_LIST_OPENER) {
-                throw new InvalidModifierFormatException(
-                    __('advanced_import.invalid_function_firs_character',
-                        array('[character]' => $char)
-                    )
-                );
+            if ($char === self::PARAMETER_LIST_OPENER)
+            {
+                throw new InvalidModifierFormatException(__('advanced_import.invalid_function_firs_character', array('[character]' => $char)));
             }
-
             $this->parsingState = ModifierParsingState::EXPECTING_OPENING_BRACKET;
             $this->function[] = $char;
         }
     }
-
     /**
      * Parses the function name by checking if the character is an opening bracket
      *
@@ -132,13 +115,15 @@ class SinglePassModifierParser implements IModifierParser
      */
     protected function parseFunctionName($char)
     {
-        if ($char === self::PARAMETER_LIST_OPENER) {
+        if ($char === self::PARAMETER_LIST_OPENER)
+        {
             $this->parsingState = ModifierParsingState::STARTING_PARSING_PARAMETER;
-        } elseif (!$this->isWhitespaceChar($char)) {
+        }
+        elseif (!$this->isWhitespaceChar($char))
+        {
             $this->function[] = $char;
         }
     }
-
     /**
      * Starts parsing parameter, by checking if it starts with wrapper or not
      *
@@ -172,14 +157,16 @@ class SinglePassModifierParser implements IModifierParser
     protected function parseParameterWithWrapper($char)
     {
         // We are waiting for encountering the corresponding wrapper, if we find it we consider parameter is parsed
-        if ($char === $this->expectedParameterCloserWrapper) {
+        if ($char === $this->expectedParameterCloserWrapper)
+        {
             $this->addParsedParameter();
             $this->parsingState = ModifierParsingState::PARAMETER_PARSING_FINISHED;
-        } else {
+        }
+        else
+        {
             $this->parameter[] = $char;
         }
     }
-
     /**
      * Parses parameter without wrapper
      *
@@ -187,24 +174,28 @@ class SinglePassModifierParser implements IModifierParser
      */
     protected function parseParameter($char)
     {
-        if (($char === self::PARAMETER_DELIMITER || $char === self::PARAMETER_LIST_CLOSER) && empty($this->expectedInnerParameterCloserWrapper)) {
+        if (($char === self::PARAMETER_DELIMITER || $char === self::PARAMETER_LIST_CLOSER) && empty($this->expectedInnerParameterCloserWrapper))
+        {
             $this->addParsedParameter('trim');
             $this->parsingState = ModifierParsingState::STARTING_PARSING_PARAMETER;
-
-            if ($char === self::PARAMETER_LIST_CLOSER) {
+            if ($char === self::PARAMETER_LIST_CLOSER)
+            {
                 $this->parsingState = ModifierParsingState::PARSING_FINISHED;
             }
-        } else {
+        }
+        else
+        {
             $this->parameter[] = $char;
         }
-
-        if (empty($this->expectedInnerParameterCloserWrapper) && in_array($char, $this->parameterWrapperVariants)) {
+        if (empty($this->expectedInnerParameterCloserWrapper) && in_array($char, $this->parameterWrapperVariants))
+        {
             $this->expectedInnerParameterCloserWrapper = $char;
-        } elseif ($char === $this->expectedInnerParameterCloserWrapper) {
+        }
+        elseif ($char === $this->expectedInnerParameterCloserWrapper)
+        {
             $this->expectedInnerParameterCloserWrapper = null;
         }
     }
-
     /**
      * Handles parsing process after parameter parsing has been finished
      *
@@ -214,19 +205,18 @@ class SinglePassModifierParser implements IModifierParser
      */
     protected function parseAfterParameterParseFinished($char)
     {
-        if ($char === self::PARAMETER_DELIMITER) {
+        if ($char === self::PARAMETER_DELIMITER)
+        {
             $this->parsingState = ModifierParsingState::STARTING_PARSING_PARAMETER;
-        } elseif ($char === self::PARAMETER_LIST_CLOSER) {
+        }
+        elseif ($char === self::PARAMETER_LIST_CLOSER)
+        {
             $this->parsingState = ModifierParsingState::PARSING_FINISHED;
-        } elseif (!$this->isWhitespaceChar($char)) {
-            throw new InvalidModifierParameterException(
-                __('advanced_import.unexpected_parameter_passed',
-                    array('[delimiter]' => self::PARAMETER_DELIMITER, '[closer]' => self::PARAMETER_LIST_CLOSER, '[char]' => $char)
-                )
-            );
+        } elseif (!$this->isWhitespaceChar($char))
+        {
+            throw new InvalidModifierParameterException(__('advanced_import.unexpected_parameter_passed', array('[delimiter]' => self::PARAMETER_DELIMITER, '[closer]' => self::PARAMETER_LIST_CLOSER, '[char]' => $char)));
         }
     }
-
     /**
      * Check if the character is one of whitespace characters
      *
@@ -238,7 +228,6 @@ class SinglePassModifierParser implements IModifierParser
     {
         return ctype_space($char);
     }
-
     /**
      * Adds parsed parameter to parameter array
      *
@@ -247,16 +236,14 @@ class SinglePassModifierParser implements IModifierParser
     protected function addParsedParameter($parameterHandler = null)
     {
         $parameter = implode('', $this->parameter);
-
-        if (is_callable($parameterHandler)) {
+        if (is_callable($parameterHandler))
+        {
             $parameter = $parameterHandler($parameter);
         }
-
         $this->parameters[] = $parameter;
         $this->expectedParameterCloserWrapper = null;
         $this->parameter = array();
     }
-
     /**
      * Resets parser state to initial
      */
@@ -265,7 +252,6 @@ class SinglePassModifierParser implements IModifierParser
         $this->parsingState = ModifierParsingState::STARTING_PARSING_MODIFIER;
         $this->function = $this->parameters = $this->parameter = array();
     }
-
     /**
      * Checks if the modifier is properly terminated.
      *
@@ -273,17 +259,9 @@ class SinglePassModifierParser implements IModifierParser
      */
     protected function checkParserStateAfterParse($modifier)
     {
-        if ($this->parsingState !== ModifierParsingState::PARSING_FINISHED) {
-            throw new InvalidModifierFormatException(
-                __('advanced_import.invalid_modifier_message',
-                    array(
-                        '[modifier]' => $modifier,
-                        '[message]'  => __('advanced_import.missing_parameters_list_closer', array(
-                            '[closer]' => self::PARAMETER_LIST_CLOSER,
-                        )),
-                    )
-                )
-            );
+        if ($this->parsingState !== ModifierParsingState::PARSING_FINISHED)
+        {
+            throw new InvalidModifierFormatException(__('advanced_import.invalid_modifier_message', array('[modifier]' => $modifier, '[message]'  => __('advanced_import.missing_parameters_list_closer', array('[closer]' => self::PARAMETER_LIST_CLOSER,)),)));
         }
     }
 }

@@ -11,12 +11,5 @@
 * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
 * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
 ****************************************************************************/
-
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
-
-fn_register_hooks(
-    'redirect',
-    'user_init',
-    'login_user_post',
-    'fill_auth'
-);
+fn_register_hooks('redirect', 'user_init', 'login_user_post', 'fill_auth');

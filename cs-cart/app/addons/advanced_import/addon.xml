@@ -14,18 +14,10 @@
     <auto_install>MULTIVENDOR,ULTIMATE</auto_install>
     <default_language>en</default_language>
     <queries>
-        <item for="install">
-            DROP TABLE IF EXISTS ?:import_presets
-        </item>
-        <item for="install">
-            DROP TABLE IF EXISTS ?:import_preset_descriptions
-        </item>
-        <item for="install">
-            DROP TABLE IF EXISTS ?:import_preset_fields
-        </item>
-        <item for="install">
-            DROP TABLE IF EXISTS ?:import_preset_states
-        </item>
+        <item for="install">DROP TABLE IF EXISTS ?:import_presets</item>
+        <item for="install">DROP TABLE IF EXISTS ?:import_preset_descriptions</item>
+        <item for="install">DROP TABLE IF EXISTS ?:import_preset_fields</item>
+        <item for="install">DROP TABLE IF EXISTS ?:import_preset_states</item>
         <item for="install">
             CREATE TABLE ?:import_presets (
                 preset_id int(11) unsigned not null auto_increment,
@@ -67,17 +59,9 @@
                 PRIMARY KEY (preset_id, company_id)
             ) ENGINE=MyISAM DEFAULT CHARSET=UTF8
         </item>
-        <item for="uninstall">
-            DROP TABLE IF EXISTS ?:import_presets
-        </item>
-        <item for="uninstall">
-            DROP TABLE IF EXISTS ?:import_preset_descriptions
-        </item>
-        <item for="uninstall">
-            DROP TABLE IF EXISTS ?:import_preset_fields
-        </item>
-        <item for="uninstall">
-            DROP TABLE IF EXISTS ?:import_preset_states
-        </item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:import_presets</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:import_preset_descriptions</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:import_preset_fields</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:import_preset_states</item>
     </queries>
 </addon>

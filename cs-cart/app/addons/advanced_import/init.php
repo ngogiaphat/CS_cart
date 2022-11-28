@@ -11,16 +11,7 @@
 * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
 * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
 ****************************************************************************/
-
 defined('BOOTSTRAP') or die('Access denied');
-
 use Tygh\Addons\AdvancedImport\ServiceProvider;
-
 Tygh::$app->register(new ServiceProvider());
-
-fn_register_hooks(
-    'import_post',
-    'delete_company',
-    'set_notification_pre',
-    'get_ext_mime_types'
-);
+fn_register_hooks('import_post', 'delete_company', 'set_notification_pre', 'get_ext_mime_types');

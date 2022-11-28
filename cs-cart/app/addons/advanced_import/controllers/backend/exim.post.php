@@ -1,5 +1,4 @@
 <?php
-
 /***************************************************************************
  *                                                                          *
  *   (c) 2004 Vladimir V. Kalynyak, Alexey V. Vinokurov, Ilya M. Shalnev    *
@@ -12,11 +11,9 @@
  * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
-
 use Tygh\Registry;
-
 defined('BOOTSTRAP') or die('Access denied');
-
 if (Registry::get('navigation.dynamic.sections.products.href') && ($mode == 'import')) {
+
     Registry::set('navigation.dynamic.sections.products.href', 'import_presets.manage&object_type=products');
 }

@@ -11,50 +11,17 @@
         <sections>
             <section id="general">
                 <items>
-                    <item id="elm_administrator_area_settings">
-                        <type>header</type>
-                        <handler/>
-                    </item>
-                    <item id="admin_reverse_ip_access">
-                        <type>checkbox</type>
-                        <default_value/>
-                    </item>
-                    <item id="unsuccessful_attempts_login">
-                        <type>checkbox</type>
-                        <default_value/>
-                    </item>
-                    <item id="number_unsuccessful_attempts">
-                        <type>input</type>
-                        <default_value>5</default_value>
-                    </item>
-                    <item id="login_intervals">
-                        <type>input</type>
-                        <default_value>60</default_value>
-                    </item>
-                    <item id="time_block">
-                        <type>input</type>
-                        <default_value>24</default_value>
-                    </item>
-                    <item id="elm_customer_and_affiliate_area_settings">
-                        <type>header</type>
-                        <handler/>
-                    </item>
-                    <item id="unsuccessful_attempts_login_customer">
-                        <type>checkbox</type>
-                        <default_value/>
-                    </item>
-                    <item id="number_unsuccessful_attempts_customer">
-                        <type>input</type>
-                        <default_value>5</default_value>
-                    </item>
-                    <item id="login_intervals_customer">
-                        <type>input</type>
-                        <default_value>60</default_value>
-                    </item>
-                    <item id="time_block_customer">
-                        <type>input</type>
-                        <default_value>24</default_value>
-                    </item>
+                    <item id="elm_administrator_area_settings"><type>header</type><handler/></item>
+                    <item id="admin_reverse_ip_access"><type>checkbox</type><default_value/></item>
+                    <item id="unsuccessful_attempts_login"><type>checkbox</type><default_value/></item>
+                    <item id="number_unsuccessful_attempts"><type>input</type><default_value>5</default_value></item>
+                    <item id="login_intervals"><type>input</type><default_value>60</default_value></item>
+                    <item id="time_block"><type>input</type><default_value>24</default_value></item>
+                    <item id="elm_customer_and_affiliate_area_settings"><type>header</type><handler/></item>
+                    <item id="unsuccessful_attempts_login_customer"><type>checkbox</type><default_value/></item>
+                    <item id="number_unsuccessful_attempts_customer"><type>input</type><default_value>5</default_value></item>
+                    <item id="login_intervals_customer"><type>input</type><default_value>60</default_value></item>
+                    <item id="time_block_customer"><type>input</type><default_value>24</default_value></item>
                 </items>
             </section>
         </sections>
@@ -104,9 +71,7 @@
             ) Engine=MyISAM DEFAULT CHARSET UTF8;
         </item>
         <item>
-            CREATE TABLE `?:access_restriction_reason_descriptions` (
-                `item_id` mediumint(8) unsigned NOT NULL auto_increment,
-                `type` char(3) NOT NULL default '',
+            CREATE TABLE `?:access_restriction_reason_descriptions` ( `item_id` mediumint(8) unsigned NOT NULL auto_increment, `type` char(3) NOT NULL default '',
                 `reason` mediumtext,
                 `lang_code` char(2) NOT NULL default '',
                 PRIMARY KEY  (`item_id`,`type`,`lang_code`)

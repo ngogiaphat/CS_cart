@@ -11,9 +11,7 @@
  * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
-
 namespace Tygh\Addons\AdvancedImport\Modifiers\Parsers;
-
 /**
  * The class decorates a parser and allows to cache the parsed results.
  *
@@ -23,7 +21,6 @@ class CachingModifierParser implements IModifierParser
 {
     /** @var IModifierParser */
     protected $parser;
-
     /** @var array Array that contains parsed modifiers */
     protected $cache = array();
 
@@ -36,18 +33,16 @@ class CachingModifierParser implements IModifierParser
     {
         $this->parser = $parser;
     }
-
     /**
      * @inheritdoc
      */
     public function parse($modifier)
     {
         $hash = $this->getModifierHash($modifier);
-
-        if (!isset($this->cache[$hash])) {
+        if (!isset($this->cache[$hash]))
+        {
             $this->cache[$hash] = $this->parser->parse($modifier);
         }
-
         return $this->cache[$hash];
     }
 

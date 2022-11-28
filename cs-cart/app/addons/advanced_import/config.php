@@ -11,8 +11,6 @@
  * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
-
 defined('BOOTSTRAP') or die('Access denied');
-
 fn_define('ADVANCED_IMPORT_PRIVATE_IMAGES_RELATIVE_PATH', 'exim/backup/images/');
 fn_define('ADVANCED_IMPORT_HTTP_EXECUTION_TIMEOUT', 10);

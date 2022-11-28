@@ -11,11 +11,8 @@
  * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
-
 namespace Tygh\Addons\AdvancedImport\Exceptions;
-
 use Tygh\Exceptions\AException;
-
 /**
  * The exception class that is thrown when parser expects params delimiter or closing bracket but gets any other character.
  *

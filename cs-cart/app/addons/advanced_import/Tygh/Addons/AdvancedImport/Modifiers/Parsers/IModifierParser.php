@@ -11,12 +11,9 @@
  * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
-
 namespace Tygh\Addons\AdvancedImport\Modifiers\Parsers;
-
 use Tygh\Addons\AdvancedImport\Exceptions\InvalidModifierFormatException;
 use Tygh\Addons\AdvancedImport\Exceptions\InvalidModifierParameterException;
-
 /**
  * The interface of the parser class responsible for parsing modifiers.
  *
